@@ -157,6 +157,11 @@ function thenow_scripts() {
 add_action( 'wp_enqueue_scripts', 'thenow_scripts' );
 
 /**
+ * Classic editor
+ */
+add_filter( 'use_block_editor_for_post', '__return_false' );
+
+/**
  * Implement the Custom Header feature.
  */
 require get_template_directory() . '/inc/custom-header.php';
@@ -175,6 +180,16 @@ require get_template_directory() . '/inc/template-functions.php';
  * Customizer additions.
  */
 require get_template_directory() . '/inc/customizer.php';
+
+/**
+ * Create custom post type
+ */
+require get_template_directory() . '/inc/post-types.php';
+
+/**
+ * Create taxonomy
+ */
+require get_template_directory() . '/inc/taxonomy.php';
 
 /**
  * Load Jetpack compatibility file.
