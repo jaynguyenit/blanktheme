@@ -35,3 +35,28 @@ function thenow_pingback_header() {
 	}
 }
 add_action( 'wp_head', 'thenow_pingback_header' );
+
+/**
+ * aq_resize function
+ */
+if(!function_exists('aq_resize')) {
+    function aq_resize( $url, $width = null, $height = null, $crop = null, $single = true, $upscale = true ) {
+        if ( defined( 'ICL_SITEPRESS_VERSION' ) ){
+            global $sitepress;
+            $url = $sitepress->convert_url( $url, $sitepress->get_default_language() );
+        }
+        $aq_resize = Aq_Resize::getInstance();
+        return $aq_resize->process( $url, $width, $height, $crop, $single, $upscale );
+    }
+}
+
+/**
+ * get resize img
+ */
+if(!function_exists('get_image')) {
+    function get_image($size=array(600,400),$class='',$url = '',$title = '') {
+        $url = ($url!='')?$url:get_the_post_thumbnail_url(get_the_ID(),'full');
+        $imgurl = aq_resize($url,$size[0],$size[1],true);
+        return '<img src="'.$imgurl.'" class="'.$class.'" alt="'.$title.'">';
+    }
+}
